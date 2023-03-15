@@ -9,7 +9,7 @@ namespace Xabe.FFmpeg.Test
     public class InputBuilderTests
     {
         [Fact]
-        public async Task PrepareInputFilesTest()
+        public void PrepareInputFilesTest()
         {
             var files = Directory.EnumerateFiles(Resources.Images).ToList();
             var builder = new InputBuilder();

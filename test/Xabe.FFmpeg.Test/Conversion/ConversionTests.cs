@@ -9,7 +9,9 @@ using Xunit;
 
 namespace Xabe.FFmpeg.Test
 {
+#pragma warning disable xUnit1033
     public class ConversionTests : IClassFixture<StorageFixture>, IClassFixture<RtspServerFixture>
+#pragma warning restore xUnit1033
     {
         private readonly StorageFixture _storageFixture;
 
