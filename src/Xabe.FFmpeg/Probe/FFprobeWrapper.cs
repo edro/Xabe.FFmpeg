@@ -16,7 +16,7 @@ namespace Xabe.FFmpeg
     {
         private async Task<ProbeModel.Stream[]> GetStreams(string videoPath, CancellationToken cancellationToken)
         {
-            var stringResult = await Start($"-v panic -print_format json=c=1 -show_streams {videoPath}", cancellationToken);
+            var stringResult = await Start($"-rtsp_transport tcp -v panic -print_format json=c=1 -show_streams {videoPath}", cancellationToken);
             if (string.IsNullOrEmpty(stringResult))
             {
                 return new ProbeModel.Stream[0];
@@ -60,7 +60,7 @@ namespace Xabe.FFmpeg
 
         private async Task<FormatModel.Root> GetInfos(string videoPath, CancellationToken cancellationToken)
         {
-            var stringResult = await Start($"-v panic -print_format json=c=1 -show_entries format=size,duration,bit_rate:format_tags=creation_time {videoPath}", cancellationToken);
+            var stringResult = await Start($"-rtsp_transport tcp -v panic -print_format json=c=1 -show_entries format=size,duration,bit_rate:format_tags=creation_time {videoPath}", cancellationToken);
             var root = JsonConvert.DeserializeObject<FormatModel.Root>(stringResult);
             return root;
         }
@@ -156,7 +156,7 @@ namespace Xabe.FFmpeg
             {
                 mediaInfo.Size = long.Parse(infos.format.size);
             }
-            
+
             if (!string.IsNullOrWhiteSpace(infos.format.tags?.creation_time) && DateTimeOffset.TryParse(infos.format.tags.creation_time, out var creationdate))
             {
                 mediaInfo.CreationTime = creationdate.UtcDateTime;
